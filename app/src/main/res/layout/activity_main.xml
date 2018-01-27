@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jvhm.dailyfin.MainActivity">
+
+    <EditText
+        android:id="@+id/monthLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="@string/monthly_limit"
+        app:layout_constraintBottom_toTopOf="@+id/currentBill"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/currentBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="@string/current_bill"
+        app:layout_constraintBottom_toTopOf="@+id/calculateDailySpendings"
+        app:layout_constraintTop_toBottomOf="@+id/monthLimit"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/calculateDailySpendings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:onClick="calculateDailyLimit"
+        android:text="@string/calculate_daily_limit"
+        app:layout_constraintBottom_toTopOf="@+id/dailyLimit"
+        app:layout_constraintTop_toBottomOf="@+id/currentBill"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/dailyLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calculateDailySpendings"
+        tools:layout_editor_absoluteX="16dp" />
+
+</android.support.constraint.ConstraintLayout>

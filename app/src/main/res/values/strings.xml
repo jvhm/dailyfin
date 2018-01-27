@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DailyFin</string>
+    <string name="monthly_limit">Limite mensal</string>
+    <string name="current_bill">Fatura atual</string>
+    <string name="calculate_daily_limit">Calcular limite diário</string>
+</resources>
