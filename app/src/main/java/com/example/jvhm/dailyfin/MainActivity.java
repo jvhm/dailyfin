@@ -2,8 +2,10 @@ package com.example.jvhm.dailyfin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.util.Calendar;
@@ -14,12 +16,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupUI(findViewById(R.id.parent));
+    }
+
+    private void setupUI(View view){
+        hideKeyboard(view);
+    }
+
+    private void hideKeyboard(View view) {
+        if(!(view instanceof EditText)){
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent e){
+                    hideSoftKeyboard();
+                    return false;
+                }
+            });
+        }
+
+        if(view instanceof ViewGroup){
+            for(int i = 0; i < ((ViewGroup) view).getChildCount(); i++){
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                this.getCurrentFocus().getWindowToken(), 0);
     }
 
     public void calculateDailyLimit(View view){
-        EditText dailyLimity = (EditText) findViewById(R.id.dailyLimit);
-        EditText monthlyMax = (EditText) findViewById(R.id.monthLimit);
-        EditText currentBill = (EditText) findViewById(R.id.currentBill);
+        EditText dailyLimit = findViewById(R.id.dailyLimit);
+        EditText monthlyMax = findViewById(R.id.monthLimit);
+        EditText currentBill = findViewById(R.id.currentBill);
         Double monthlyMaxVal = 0.0;
         Double currentBillVal = 0.0;
 
@@ -28,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             currentBillVal = Double.parseDouble(currentBill.getText().toString());
         }
         catch(Exception e){
-            dailyLimity.setText("");
+            dailyLimit.setText("");
         }
 
         // Get number of days in current month
@@ -36,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         int monthDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         int currentDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        Double dailyLimit = (monthlyMaxVal - currentBillVal) / (monthDays - currentDay);
+        Double dailyLimitVal = (monthlyMaxVal - currentBillVal) / (monthDays - currentDay);
 
-        dailyLimity.setText(dailyLimit.toString());
+        dailyLimit.setText(dailyLimitVal.toString());
     }
 }
